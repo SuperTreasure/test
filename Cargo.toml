@@ -15,12 +15,6 @@ codegen-units = 1
 panic = 'abort'
 strip = "symbols"
 
-[workspace.package]
-version = "0.1.4"
-authors = ["Nice Folks"]
-description = "A short description of my package"
-documentation = "https://example.com/bar"
-
 [workspace.metadata.release]
 tag = false
 tag-message = "Release version {new_version}"
