@@ -3,26 +3,6 @@
 version = 3
 
 [[package]]
-name = "aaa"
-version = "0.1.4"
-dependencies = [
- "boa_engine",
- "chrono",
- "clap",
- "cookie",
- "dotenv_rs",
- "fake",
- "hex",
- "md-5",
- "openssl",
- "regex",
- "reqwest",
- "serde_json",
- "shell-words",
- "tokio",
-]
-
-[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
