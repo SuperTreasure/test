@@ -49,3 +49,4 @@ fn subcommand(cli: Cli) {
         None => std::process::exit(0),
     }
 }
+
