@@ -19,4 +19,4 @@ tag-message = "Release version {new_version}"
 push = false
 publish = false
 push-remote = "origin"
-
+sign-commit = false
