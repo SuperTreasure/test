@@ -26,10 +26,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - x86_64-pc-windows-gnu
-          - x86_64-unknown-linux-gnu
-          - x86_64-unknown-linux-musl
-          - s390x-unknown-linux-gnu
+          - ${{ steps.get-matrix.outputs.matrix }}
     steps:
     - name: Use matrix in test job
       run: echo ${{ matrix.target }}
