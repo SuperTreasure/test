@@ -23,6 +23,13 @@ publish = false
 push-remote = "origin"
 pre-release-commit-message = "这儿是一个测试"
 
+[workspace.package]
+version = "0.1.14"
+authors = ["Ezong"]
+description = "Get the source address of the live broadcast room"
+readme = "README.md"
+license-file = "LICENSE"
+
 [workspace.dependencies]
 dotenv_rs = "0.16.1"
 reqwest = "0.11.19"
