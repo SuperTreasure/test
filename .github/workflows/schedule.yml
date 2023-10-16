@@ -1,7 +1,8 @@
 name: schedule test
 on: 
   push: 
-    master
+    branches:
+      - master
 
 jobs:
   build:
