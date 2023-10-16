@@ -1,5 +1,6 @@
 [package]
 name = "cookie"
+edition = "2021"
 version.workspace = true
 authors.workspace = true
 description.workspace = true
