@@ -1,0 +1,27 @@
+name: schedule test
+on: 
+  push: 
+    master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-pc-windows-gnu
+          - x86_64-unknown-linux-gnu
+          - x86_64-unknown-linux-musl
+          - s390x-unknown-linux-gnu
+    outputs:
+      matrix: ${{ toJson(matrix) }}
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get matrix from build job
+      id: get-matrix
+      run: echo "::set-output name=matrix::${{ needs.build.outputs.matrix }}"
+    - name: Use matrix in test job
+      run: echo "Matrix: ${{fromJson(steps.get-matrix.outputs.matrix).target}}"
