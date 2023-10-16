@@ -19,6 +19,8 @@ tag-message = "Release version {new_version}"
 push = false
 publish = false
 push-remote = "origin"
+consolidate-commits = true
+pre-release-commit-message = "这儿是一个测试"
 
 [workspace.dependencies]
 dotenv_rs = "0.16.1"
