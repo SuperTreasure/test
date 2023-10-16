@@ -12,7 +12,6 @@ codegen-units = 1
 panic = 'abort'
 strip = "symbols"
 
-
 [workspace.metadata.release]
 allow-branch = ["master"]
 tag = true
@@ -21,7 +20,7 @@ tag-message = "Release version {new_version}"
 push = false
 publish = false
 push-remote = "origin"
-pre-release-commit-message = "{new_version} 发行版"
+pre-release-commit-message = "{ersion} 发行版"
 
 [workspace.package]
 version = "0.1.15"
