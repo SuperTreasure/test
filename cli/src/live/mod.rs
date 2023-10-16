@@ -13,7 +13,7 @@ use self::douyin::douyin;
 use self::douyu::douyu;
 
 #[derive(Parser)]
-#[command(author = "Ezong",version = env!("CARGO_PKG_VERSION"),
+#[command(author = env!("CARGO_PKG_NAME"),version = env!("CARGO_PKG_VERSION"),
 about=r"
 ____________________________________________________
 
