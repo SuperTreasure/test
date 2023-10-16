@@ -14,9 +14,9 @@ panic = 'abort'
 strip = "symbols"
 
 [workspace.metadata.release]
-tag = false
+tag = true
 tag-message = "Release version {new_version}"
 push = false
 publish = false
 push-remote = "origin"
-sign-commit = false
+
