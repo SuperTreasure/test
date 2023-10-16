@@ -16,6 +16,9 @@ jobs:
           - s390x-unknown-linux-gnu
     outputs:
       matrix: ${{ toJson(matrix) }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
   test:
     needs: build
