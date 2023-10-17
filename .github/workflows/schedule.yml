@@ -28,7 +28,7 @@ jobs:
               jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} $jobs_url")
               for job in jobs; do
                 if [[ $(echo $job | jq -r .name) == "evina ${{ matrix.roomid }}" ]];then
-                  if [[ $(echo $job | jq -r .steps[2].status != "completed") ]];then
+                  if [[ $(echo $job | jq -r .steps[5].status != "completed") ]];then
                     echo $job
                   fi
                 fi
