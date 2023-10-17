@@ -18,17 +18,24 @@ jobs:
           wget $(curl https://api.github.com/repos/soft-cute/evina/releases/125357820/assets | jq -r .[3].browser_download_url)
           tar -xvf evina*.tar.xz
           sudo chmod +x ./evina         
-      - name: cache ${{ matrix.roomid }}.conf
-        id: cache-douyu
-        uses: actions/cache@v3
-        with:
-          path: |
-            ./${{ matrix.roomid }}.conf
-          key: douyu-${{ matrix.roomid }}-conf
 
-      - name: create ${{ matrix.roomid }}.conf
-        if: steps.cache-douyu.outputs.cache-hit != 'true'
+      - name: evina ${{ matrix.roomid }}
         run: |
-          ./evina -l douyu -i ${{ matrix.roomid }} > ${{ matrix.roomid }}.conf
-          cat ${{ matrix.roomid }}.conf
-        
+          workflow_runs = $(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/soft-cute/test/actions/runs?status=in_progress | jq -r .)
+          for workflow_run in workflow_runs; do
+            if [[ $(echo $workflwd_run | jq -r .name) == "schedule test" ]];then
+              jobs_url = $(echo $workflwd_run | jq -r .jobs_url)
+              jobs = $(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} $jobs_url")
+              for job in jobs; do
+                if [[ $(echo $job | jq -r .name) == "evina ${{ matrix.roomid }}" ]];then
+                  if [[ $(echo $job | jq -r .steps[2].status != "completed") ]];then
+                    echo $job
+                  fi
+                fi
+              done
+            fi
+          done
+
+
+
+
