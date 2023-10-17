@@ -29,6 +29,6 @@ jobs:
       - name: create ${{ matrix.roomid }}.conf
         if: steps.cache-douyu.outputs.cache-hit != 'true'
         run: |
-          ./evina -l douyu -i > ${{ matrix.roomid }}.conf
+          ./evina -l douyu -i ${{ matrix.roomid }} > ${{ matrix.roomid }}.conf
           cat ${{ matrix.roomid }}.conf
         
