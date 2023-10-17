@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - ${{ steps.get-matrix.outputs.matrix }}
+          - steps.get-matrix.outputs.matrix
     steps:
     - name: Use matrix in test job
       run: echo ${{ matrix.target }}
