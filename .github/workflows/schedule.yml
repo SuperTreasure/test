@@ -5,28 +5,30 @@ on:
       - master
 
 jobs:
-  build:
+  douyu:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target:
-          - x86_64-pc-windows-gnu
-          - x86_64-unknown-linux-gnu
-          - x86_64-unknown-linux-musl
-          - s390x-unknown-linux-gnu
-    outputs:
-      matrix: ${{ toJson(matrix) }}
+        roomid:
+          - 88080
+          - 5720533
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: download evina
+        run: |
+          wget $(curl https://api.github.com/repos/soft-cute/evina/releases/125357820/assets | jq -r .[3].browser_download_url)
+          tar -xvf evina*.tar.xz
+          sudo chmod +x ./evina         
+      - name: cache ${{ matrix.roomid }}.conf
+        id: cache-douyu
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./${{ matrix.roomid }}.conf
+          key: douyu-${{ matrix.roomid }}-conf
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - steps.get-matrix.outputs.matrix
-    steps:
-    - name: Use matrix in test job
-      run: echo ${{ matrix.target }}
+      - name: create ${{ matrix.roomid }}.conf
+        if: steps.cache-douyu.outputs.cache-hit != 'true'
+        run: |
+          ./evina -l douyu -i > ${{ matrix.roomid }}.conf
+          cat ${{ matrix.roomid }}.conf
+        
