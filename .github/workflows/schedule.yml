@@ -23,7 +23,7 @@ jobs:
         run: |
           workflow_runs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/soft-cute/test/actions/runs?status=in_progress | jq -r .)
           for workflow_run in workflow_runs; do
-            if [[ $(echo $workflwd_run | jq -r .name) == "schedule test" ]];then
+            if [[ $(echo $workflwd_run | jq -r .name) == "build evina cmd" ]];then
               jobs_url=$(echo $workflwd_run | jq -r .jobs_url)
               jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} $jobs_url")
               for job in jobs; do
