@@ -27,7 +27,7 @@ jobs:
               jobs_url=$(echo $workflwd_run | jq -r .jobs_url)
               jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} $jobs_url")
               for job in jobs; do
-                if [[ $(echo $job | jq -r .name) == "evina ${{ matrix.roomid }}" ]];then
+                if [[ $(echo $job | jq -r .name) == "evina_cmd (x86_64-pc-windows-gnu)" ]];then
                   if [[ $(echo $job | jq -r .steps[5].status != "completed") ]];then
                     echo $job
                   fi
