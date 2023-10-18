@@ -34,7 +34,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
           name: "schedule test"
-          name_step: "douyu (${{ matrix.roomid }})"
+          name_job: "douyu (${{ matrix.roomid }})"
           name_step: "evina ${{ matrix.roomid }}"
           num_step: 5
 
