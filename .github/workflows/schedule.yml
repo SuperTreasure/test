@@ -19,23 +19,19 @@ jobs:
           tar -xvf evina*.tar.xz
           sudo chmod +x ./evina         
 
+      - name: check ${{ matrix.roomid }}
+        id: check_workflow
+        uses: ./.github/check
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          name: "schedule test"
+          name_step: "evina (${{ matrix.roomid }})"
+          num_step: 3
+
       - name: evina ${{ matrix.roomid }}
+        if: steps.check_workflow.outputs.in_progress == false
         run: |
-          workflow_runs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/soft-cute/test/actions/runs?status=in_progress | jq -r .)
-          for workflow_run in workflow_runs; do
-            if [[ $(echo $workflwd_run | jq -r .name) == "build evina cmd" ]];then
-              jobs_url=$(echo $workflwd_run | jq -r .jobs_url)
-              jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }} $jobs_url")
-              for job in jobs; do
-                if [[ $(echo $job | jq -r .name) == "evina_cmd (x86_64-pc-windows-gnu)" ]];then
-                  if [[ $(echo $job | jq -r .steps[5].status != "completed") ]];then
-                    echo $job
-                  fi
-                fi
-              done
-            fi
-          done
-
-
-
+          evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
