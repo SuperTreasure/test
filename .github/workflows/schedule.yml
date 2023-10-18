@@ -3,6 +3,8 @@ on:
   push: 
     branches:
       - master
+env:
+  repository: ${{ github.repository }}
 
 jobs:
   douyu:
@@ -19,7 +21,7 @@ jobs:
         run: |
           wget $(curl https://api.github.com/repos/soft-cute/evina/releases/125357820/assets | jq -r .[3].browser_download_url)
           tar -xvf evina*.tar.xz
-          sudo chmod +x ./evina         
+          sudo chmod +x ./evina    
 
       - name: check ${{ matrix.roomid }}
         id: check_workflow
@@ -27,7 +29,7 @@ jobs:
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
-          repo: ${{ github.repository }}
+          repo: ${{ github.event.repository.name }}
           name: "schedule test"
           name_step: "evina (${{ matrix.roomid }})"
           num_step: 5
@@ -35,5 +37,5 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
-          evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
+          ./evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
