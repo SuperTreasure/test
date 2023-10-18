@@ -13,6 +13,8 @@ jobs:
           - 88080
           - 5720533
     steps:
+      - uses: actions/checkout@v4
+
       - name: download evina
         run: |
           wget $(curl https://api.github.com/repos/soft-cute/evina/releases/125357820/assets | jq -r .[3].browser_download_url)
@@ -28,7 +30,7 @@ jobs:
           repo: ${{ github.repository }}
           name: "schedule test"
           name_step: "evina (${{ matrix.roomid }})"
-          num_step: 3
+          num_step: 5
 
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
