@@ -53,7 +53,7 @@ jobs:
             option/
           key: ${{ runner.os }}-option-${{ needs.create_option.outputs.date }}
 
-      - neme: create environment 
+      - name: create environment 
         run: |
           sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
           sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyun
