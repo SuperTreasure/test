@@ -15,6 +15,9 @@ inputs:
   name:
     description: "需要检查的工作流名称"
     required: true
+  name_job:
+    description: "需要检查的job名称"
+    required: true
   name_step:
     description: "需要检查的step名称"
     required: true
@@ -38,6 +41,7 @@ runs:
         INPUT_OWNER: ${{ inputs.owner }}
         INPUT_REPO: ${{ inputs.repo }}
         INPUT_NAME: ${{ inputs.name }}
+        INPUT_NAME_JOB: ${{ inputs.name_job }}
         INPUT_NAME_STEP: ${{ inputs.name_step }}
         INPUT_NUM_STEP: ${{ inputs.num_step }}
 

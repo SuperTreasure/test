@@ -33,7 +33,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
-          name: "douyu (${{ matrix.roomid }})"
+          name: "schedule test"
+          name_step: "douyu (${{ matrix.roomid }})"
           name_step: "evina ${{ matrix.roomid }}"
           num_step: 5
 
