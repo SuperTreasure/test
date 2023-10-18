@@ -2,6 +2,7 @@
 
 workflow_runs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $INPUT_TOKEN" https://api.github.com/repos/$INPUT_OWNER/$INPUT_REPO/actions/runs?status=in_progress)
 num=$(echo $workflow_runs | jq -r .total_count)
+echo $num
 if [ "$num" -eq 0 ]; then
   echo "in_progress=false" >> $GITHUB_OUTPUT
 else
