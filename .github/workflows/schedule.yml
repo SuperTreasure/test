@@ -5,26 +5,60 @@ on:
       - master
 
 jobs:
-  douyu:
+  create_option:
     runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.set-date.outputs.date }}
+    steps: 
+      - id: set-date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: cache option
+        id: cache-option
+        uses: actions/cache@v3
+        with: 
+          path: |
+            option
+          key: ${{ runner.os }}-option-${{ steps.set-date.outputs.date }}
+          restore-keys: |
+            ${{ runner.os }}-option-
+
+      - name: download evina
+        if: steps.cache-option.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p option
+          wget $(curl https://api.github.com/repos/soft-cute/evina/releases/latest | jq -r .assets[3].browser_download_url)
+          tar -xvf evina*.tar.xz -C option
+          wget $(curl https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest | jq -r .assets[36].browser_download_url)
+          tar -xvf ffmpeg*.tar.xz -C option
+          wget $(curl https://api.github.com/repos/tickstep/aliyunpan/releases/latest | jq -r .assets[10].browser_download_url)
+          unzip aliyunpan*.zip -d option
+          ./option/aliyunpan*amd64/aliyunpan login -RefreshToken=${{ secrets.ALI_TOKEN }}
+
+  douyu:
+    needs: create_option
     strategy:
       matrix:
         roomid:
           - 88080
           - 5720533
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: download evina
+      - name: cache option
+        uses: actions/cache@v3
+        with:
+          path: |
+            option/
+          key: ${{ runner.os }}-option-${{ needs.create_option.outputs.date }}
+
+      - neme: create environment 
         run: |
-          wget $(curl https://api.github.com/repos/soft-cute/evina/releases/latest | jq -r .assets[3].browser_download_url)
-          tar -xvf evina*.tar.xz
-          sudo chmod +x ./evina
-          wget $(curl https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest | jq -r .assets[36].browser_download_url)
-          tar -xvf ffmpeg*.tar.xz
-          sudo ln -s $PWD/ffmpeg-n6.0-latest-linux64-gpl-6.0/bin/ffmpeg /bin/ffmpeg
-
-
+          sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
+          sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyun
+          sudo ln -s $PWD/option/evina /bin/evina
+          
 
       - name: check ${{ matrix.roomid }}
         id: check_workflow
@@ -36,10 +70,14 @@ jobs:
           name: "schedule test"
           name_job: "douyu (${{ matrix.roomid }})"
           name_step: "evina ${{ matrix.roomid }}"
-          num_step: 5
+          num_step: 6
 
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
           sudo ./evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
+      - name: aliyun upload
+        run: |
+          aliyun token update
+          aliyun upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
