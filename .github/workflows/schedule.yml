@@ -3,8 +3,6 @@ on:
   push: 
     branches:
       - master
-env:
-  repository: ${{ github.repository }}
 
 jobs:
   douyu:
@@ -37,5 +35,5 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
-          ./evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
+          sudo ./evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
