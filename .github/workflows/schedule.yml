@@ -17,9 +17,14 @@ jobs:
 
       - name: download evina
         run: |
-          wget $(curl https://api.github.com/repos/soft-cute/evina/releases/125357820/assets | jq -r .[3].browser_download_url)
+          wget $(curl https://api.github.com/repos/soft-cute/evina/releases/latest | jq -r .assets[3].browser_download_url)
           tar -xvf evina*.tar.xz
-          sudo chmod +x ./evina    
+          sudo chmod +x ./evina
+          wget $(curl https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest | jq -r .assets[37].browser_download_url)
+          tar -xvf ffmpeg*.tar.xz
+          sudo ln -s $PWD/ffmpeg-n6.0-latest-linux64-gpl-6.0/bin/ffmpeg /bin/ffmpeg
+
+
 
       - name: check ${{ matrix.roomid }}
         id: check_workflow
@@ -28,7 +33,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
-          name: "schedule test"
+          name: "douyu (${{ matrix.roomid }})"
           name_step: "evina ${{ matrix.roomid }}"
           num_step: 5
 
