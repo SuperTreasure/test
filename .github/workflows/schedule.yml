@@ -90,7 +90,7 @@ jobs:
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
           if [[ "${{ steps.check_evina.outputs.status }}" == "false" ]]; then
-            aliyunpan upload 录播/抖音录播 /录播
+            aliyunpan upload 录播/斗鱼录播 /录播
           fi
 
   douyin:
