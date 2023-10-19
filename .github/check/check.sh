@@ -9,8 +9,6 @@ else
         run_number=$(echo $workflow_runs | jq -r .workflow_runs[$i].run_number)
         name=$(echo $workflow_runs | jq -r .workflow_runs[$i].name)
         jobs_url=$(echo $workflow_runs | jq -r .workflow_runs[$i].jobs_url)
-        echo $run_number
-        echo $INPUT_RUN_NUMBER
         if [[ "$name" == "$INPUT_NAME" && "$run_number" != "$INPUT_RUN_NUMBER" ]]; then
             jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $INPUT_TOKEN" $jobs_url)
             num_job=$(echo $jobs | jq -r .total_count)
@@ -21,7 +19,6 @@ else
                     name_step=$(echo $steps | jq -r .name)
                     if [[ "$name_step" == "$INPUT_NAME_STEP" ]]; then
                         if [[ "$(echo $steps | jq -r .status)" != "completed" ]]; then
-                            echo $steps | jq -r .status
                             echo "in_progress=true" >> $GITHUB_OUTPUT
                         else
                             echo "in_progress=false" >> $GITHUB_OUTPUT
