@@ -6,8 +6,8 @@ if [ "$num" -eq 0 ]; then
   echo "in_progress=false" >> $GITHUB_OUTPUT
 else
     for ((i=0; i<$num; i++)); do
-        run_number=$(echo $workflow_runs | jq -r .workflow_runs[$i].name)
-        name=$(echo $workflow_runs | jq -r .workflow_runs[$i].run_number)
+        run_number=$(echo $workflow_runs | jq -r .workflow_runs[$i].run_number)
+        name=$(echo $workflow_runs | jq -r .workflow_runs[$i].name)
         jobs_url=$(echo $workflow_runs | jq -r .workflow_runs[$i].jobs_url)
         echo $run_number
         echo $INPUT_RUN_NUMBER

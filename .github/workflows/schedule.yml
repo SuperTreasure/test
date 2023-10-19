@@ -52,6 +52,8 @@ jobs:
           path: |
             option/
           key: ${{ runner.os }}-option-${{ needs.create_option.outputs.date }}
+          restore-keys: |
+            ${{ runner.os }}-option-
 
       - name: create environment 
         run: |
@@ -76,7 +78,7 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
-          sudo ./evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
+          sudo evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
       - name: aliyun upload
         run: |
