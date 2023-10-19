@@ -29,6 +29,8 @@ else
                     fi
                 fi
             done
+        else
+            echo "in_progress=false" >> $GITHUB_OUTPUT
         fi
     done
 fi

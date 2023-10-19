@@ -60,6 +60,7 @@ jobs:
           sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
           sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyun
           sudo ln -s $PWD/option/evina /bin/evina
+          tree ./option
           
 
       - name: check ${{ matrix.roomid }}
@@ -78,7 +79,6 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
-          echo ${{ steps.check_workflow.outputs.in_progress }}
           sudo evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
       - name: aliyun upload
