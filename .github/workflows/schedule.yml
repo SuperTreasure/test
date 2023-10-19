@@ -20,6 +20,8 @@ jobs:
           path: |
             option
           key: ${{ runner.os }}-option-${{ steps.set-date.outputs.date }}
+          restore-keys: |
+            ${{ runner.os }}-option-
 
       - name: download evina
         if: steps.cache-option.outputs.cache-hit != 'true'
@@ -30,7 +32,7 @@ jobs:
           wget $(curl https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest | jq -r .assets[36].browser_download_url)
           tar -xvf ffmpeg*.tar.xz -C option
           wget $(curl https://api.github.com/repos/tickstep/aliyunpan/releases/latest | jq -r .assets[10].browser_download_url)
-          unzip aliyunpan*.zip -d option
+          unzip -o aliyunpan*.zip -d option
           ./option/aliyunpan*amd64/aliyunpan login -RefreshToken=${{ secrets.ALI_TOKEN }}
 
   douyu:
@@ -68,6 +70,7 @@ jobs:
           name: "schedule test"
           name_job: "douyu (${{ matrix.roomid }})"
           name_step: "evina ${{ matrix.roomid }}"
+          run_number: ${{ github.run_number }}
           num_step: 6
 
       - name: evina ${{ matrix.roomid }}

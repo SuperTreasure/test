@@ -9,7 +9,7 @@ changelog() {
     do 
     changes="$changes\n| $file | $(shasum -a 256 artifac/$file | awk '{print $1}') |"
     done
-    echo "$changes" > changes.md
+    echo -e "$changes" > changes.md
 }
 
 

@@ -6,9 +6,12 @@ if [ "$num" -eq 0 ]; then
   echo "in_progress=false" >> $GITHUB_OUTPUT
 else
     for ((i=0; i<$num; i++)); do
-        name=$(echo $workflow_runs | jq -r .workflow_runs[$i].name)
+        run_number=$(echo $workflow_runs | jq -r .workflow_runs[$i].name)
+        name=$(echo $workflow_runs | jq -r .workflow_runs[$i].run_number)
         jobs_url=$(echo $workflow_runs | jq -r .workflow_runs[$i].jobs_url)
-        if [[ "$name" == "$INPUT_NAME" ]]; then
+        echo $run_number
+        echo $INPUT_RUN_NUMBER
+        if [[ "$name" == "$INPUT_NAME" && "$run_number" != "$INPUT_RUN_NUMBER" ]]; then
             jobs=$(curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $INPUT_TOKEN" $jobs_url)
             num_job=$(echo $jobs | jq -r .total_count)
             for ((i_job=0; i_job<$num_job; i_job++)); do

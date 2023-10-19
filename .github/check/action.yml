@@ -24,6 +24,9 @@ inputs:
   num_step:
     description: "需要检查的step在第几步"
     required: true
+  run_number:
+    description: "当前运行的编号"
+    required: true
 
 outputs:
   in_progress:
@@ -44,4 +47,5 @@ runs:
         INPUT_NAME_JOB: ${{ inputs.name_job }}
         INPUT_NAME_STEP: ${{ inputs.name_step }}
         INPUT_NUM_STEP: ${{ inputs.num_step }}
+        INPUT_RUN_NUMBER: ${{ inputs.run_number }}
 
