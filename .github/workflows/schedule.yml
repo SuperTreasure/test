@@ -78,12 +78,12 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          sudo evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
+          sudo evina -l douyu -i ${{ matrix.roomid }} -m -d 录播
 
       - name: aliyun upload
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          aliyunpan upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
+          aliyunpan upload 录播/斗鱼录播 /录播
 
   douyin:
     needs: create_option
@@ -133,9 +133,9 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          sudo evina -l douyin -i ${{ matrix.roomid }} -m -d douyin-${{ matrix.roomid }}
+          sudo evina -l douyin -i ${{ matrix.roomid }} -m -d 录播
 
       - name: aliyun upload
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          aliyunpan upload douyin-${{ matrix.roomid }}/抖音录播 /录播
+          aliyunpan upload 录播/抖音录播 /录播
