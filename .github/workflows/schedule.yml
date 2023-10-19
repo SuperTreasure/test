@@ -20,8 +20,6 @@ jobs:
           path: |
             option
           key: ${{ runner.os }}-option-${{ steps.set-date.outputs.date }}
-          restore-keys: |
-            ${{ runner.os }}-option-
 
       - name: download evina
         if: steps.cache-option.outputs.cache-hit != 'true'
