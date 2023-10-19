@@ -78,9 +78,11 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == false
         run: |
+          echo ${{ steps.check_workflow.outputs.in_progress }}
           sudo evina -l douyu -i ${{ matrix.roomid }} -m -d douyu-${{ matrix.roomid }}
 
       - name: aliyun upload
+        if: steps.check_workflow.outputs.in_progress == false
         run: |
           aliyun token update
           aliyun upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
