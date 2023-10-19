@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            option/
+            option
           key: ${{ runner.os }}-option-${{ needs.create_option.outputs.date }}
           restore-keys: |
             ${{ runner.os }}-option-
