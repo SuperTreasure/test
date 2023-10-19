@@ -58,9 +58,10 @@ jobs:
       - name: create environment 
         run: |
           sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
-          sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyun
+          sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyunpan
           sudo ln -s $PWD/option/evina /bin/evina
           tree ./option
+          cat ./option/aliyunpan-v0.2.8-linux-amd64/aliyunpan_config.json
           
 
       - name: check ${{ matrix.roomid }}
@@ -84,8 +85,8 @@ jobs:
       - name: aliyun upload
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          aliyun token update
-          aliyun upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
+          aliyunpan token update
+          aliyunpan upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
 
       - name: echo
         run: |
