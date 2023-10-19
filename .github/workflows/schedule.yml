@@ -86,3 +86,7 @@ jobs:
         run: |
           aliyun token update
           aliyun upload douyu-${{ matrix.roomid }}/斗鱼录播 /录播
+
+      - name: echo
+        run: |
+          echo ${{ steps.check_workflow.outputs.in_progress }}
