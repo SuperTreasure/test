@@ -133,9 +133,9 @@ jobs:
       - name: evina ${{ matrix.roomid }}
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          sudo evina -l douyu -i ${{ matrix.roomid }} -m -d douyin-${{ matrix.roomid }}
+          sudo evina -l douyin -i ${{ matrix.roomid }} -m -d douyin-${{ matrix.roomid }}
 
       - name: aliyun upload
         if: steps.check_workflow.outputs.in_progress == 'false'
         run: |
-          aliyunpan upload douyu-${{ matrix.roomid }}/抖音录播 /录播
+          aliyunpan upload douyin-${{ matrix.roomid }}/抖音录播 /录播
