@@ -8,15 +8,15 @@ jobs:
   clean_ubuntu:
     runs-on: ubuntu-latest
     steps:
+      - name: purge
+        run: |
+          df -h
+          sudo -E apt-get purge *
+          df -h
       - name: autoremove
         run: |
           df -h
           sudo -E apt-get autoremove
-          df -h
-      - name: purge
-        run: |
-          df -h
-          sudo -E apt-get purge
           df -h
       - name: autoclean
         run: |
