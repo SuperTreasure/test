@@ -1,0 +1,30 @@
+name: clean ubuntu
+on:
+  push:
+    branches:
+      - master
+
+job:
+  clean_ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: autoremove
+        run: |
+          df -h
+          apt-get autoremove
+          df -h
+      - name: purge
+        run: |
+          df -h
+          apt-get purge
+          df -h
+      - name: autoclean
+        run: |
+          df -h
+          apt-get autoclean
+          df -h
+      - name: clean
+        run: |
+          df -h
+          apt-get clean
+          df -h

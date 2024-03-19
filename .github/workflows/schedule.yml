@@ -1,22 +1,22 @@
 name: schedule test
-on: 
-  push: 
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
 jobs:
   create_option:
     runs-on: ubuntu-latest
     outputs:
       date: ${{ steps.set-date.outputs.date }}
-    steps: 
+    steps:
       - id: set-date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: cache option
         id: cache-option
         uses: actions/cache@v3
-        with: 
+        with:
           path: |
             option
           key: ${{ runner.os }}-option-${{ steps.set-date.outputs.date }}
@@ -55,17 +55,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-option-
 
-      - name: create environment 
+      - name: create environment
         run: |
           sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
           sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyunpan
           sudo ln -s $PWD/option/evina /bin/evina
           aliyunpan token update
-          
+
       - name: check ${{ matrix.roomid }}
         id: check_workflow
         uses: ./.github/check
-        with: 
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
@@ -119,16 +119,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-option-
 
-      - name: create environment 
+      - name: create environment
         run: |
           sudo ln -s $PWD/option/ffmpeg*6.0/bin/ffmpeg /bin/ffmpeg
           sudo ln -s $PWD/option/aliyunpan*amd64/aliyunpan /bin/aliyunpan
           sudo ln -s $PWD/option/evina /bin/evina
-          
+
       - name: check workflow ${{ matrix.roomid }}
         id: check_workflow
         uses: ./.github/check
-        with: 
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
