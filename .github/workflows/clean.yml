@@ -11,7 +11,8 @@ jobs:
       - name: purge
         run: |
           df -h
-          sudo -E apt-get purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet*  snap*
+          sudo -E apt update
+          sudo -E apt-get purge *
           df -h
       - name: autoremove
         run: |
