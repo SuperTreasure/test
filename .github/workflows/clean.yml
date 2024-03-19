@@ -11,20 +11,20 @@ jobs:
       - name: autoremove
         run: |
           df -h
-          apt-get autoremove
+          sudo -E apt-get autoremove
           df -h
       - name: purge
         run: |
           df -h
-          apt-get purge
+          sudo -E apt-get purge
           df -h
       - name: autoclean
         run: |
           df -h
-          apt-get autoclean
+          sudo -E apt-get autoclean
           df -h
       - name: clean
         run: |
           df -h
-          apt-get clean
+          sudo -E apt-get clean
           df -h
