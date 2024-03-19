@@ -8,25 +8,21 @@ jobs:
   clean_ubuntu:
     runs-on: ubuntu-latest
     steps:
-      - name: purge
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+      - name: check
         run: |
-          df -h
-          docker rmi `docker images -q`
-          sudo -E apt update
-          sudo -E apt-get purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet*  snap*
-          df -h
-      - name: autoremove
-        run: |
-          df -h
-          sudo -E apt-get autoremove --purge
-          df -h
-      - name: autoclean
-        run: |
-          df -h
-          sudo -E apt-get autoclean
-          df -h
-      - name: clean
-        run: |
-          df -h
-          sudo -E apt-get clean
           df -h
