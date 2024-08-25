@@ -3,7 +3,6 @@
     <img src="./.github/image.jpg" style="width: 100%;object-fit:cover">
 </div>
 
-
 <div align="center">
     <hr/>
     <a href="https://github.com/soft-cute/test">
